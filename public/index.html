@@ -1,0 +1,142 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="userDetail">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>Node/Angular User Detail App</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="css/bootstrap.css"><!-- load bootstrap -->
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#user-list 				{ margin-bottom:30px; }
+		#user-form 	 			{ margin-top:50px; margin-bottom:50px; }
+	</style>
+
+	<!-- SPELLS -->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet"></link>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="core.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+
+</head>
+<body ng-controller="mainController">
+	<div class="container">
+		
+		<div class="bs-example bs-navbar-top-example">
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			  <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
+			  <div class="container-fluid">
+				<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-6">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand" href="#">Test</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+				  <ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+				  </ul>
+				</div><!-- /.navbar-collapse -->
+			  </div>
+			</nav>
+		</div>
+		
+		<!-- FORM TO CREATE USer -->
+		<div id="user-form" class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<form>
+					<div class="form-group">
+						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+						<h2>Add New User</h2>
+						<input type="text" class="form-control input-lg text-center" placeholder="First Name" ng-model="formData.fname">
+						<input type="text" class="form-control input-lg text-center" placeholder="Last Name" ng-model="formData.lname">
+						<input type="text" class="form-control input-lg text-center" placeholder="Address" ng-model="formData.address">
+					</div>
+
+					<!-- createUser() WILL CREATE NEW USer -->
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createUser()">Add</button>
+				</form>
+			</div>
+		</div>
+		
+		
+		<!-- Users COUNT -->
+		<div class="text-center">
+			<h1>Total Users <span class="label label-success">{{ user.length }}</span></h1>
+		</div>
+
+		<!-- User LIST -->
+		<div id="user-list" class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+
+				<!-- LOOP OVER THE users IN $scope.users -->
+				<div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Fname</th>
+								<th>Lname</th>
+								<th>Address</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in user" >
+								<td>
+									<span class="editrow" child-scope>
+										<span ng-hide="editing">
+											{{user.fname}}
+										</span>
+										<span ng-show="editing">
+											<input type="text" ng-model="user.fname"> 
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="editrow" child-scope>
+										<span ng-hide="editing">
+											{{user.lname}}
+										</span>
+										<span ng-show="editing">
+											<input type="text" ng-model="user.lname"> 
+										</span>
+									</span>
+								</td>
+								<td>
+									<span class="editrow" child-scope>
+										<span ng-hide="editing">
+											{{user.address}}
+										</span>
+										<span ng-show="editing">
+											<input type="text" ng-model="user.address"> 
+										</span>
+									</span>
+								</td>
+								<td>
+									<span ng-hide="editing" ng-click="editing = true"><i class="icon-pencil"></i></span>
+									<span ng-show="editing" ng-click="editing = false"><i class="icon-ok"></i></span>
+									<span ng-click="deleteUser(user._id)"><i class="icon-remove"></i></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
